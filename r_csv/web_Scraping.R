@@ -16,3 +16,13 @@ csv_example <- html_text(pre_tags[11])
 # Remove unnecessary HTML tags and whitespace
 cleaned_data <- gsub("</?pre>", "", csv_example)
 
+# Split data into lines
+lines <- unlist(strsplit(cleaned_data, "\n"))
+
+# Create a data frame from the CSV lines
+data <- read.csv(text = paste(lines, collapse = "\n"), header = TRUE, stringsAsFactors = FALSE)
+
+# Convert the data frame to JSON and save it to a file
+output_file <- "table_data.json"
+write_json(data, output_file, pretty = TRUE)
+
